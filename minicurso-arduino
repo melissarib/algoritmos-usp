@@ -1,0 +1,22 @@
+/*
+  This program blinks pin 13 of the Arduino (the
+  built-in LED)
+*/
+
+void setup()
+{
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  // turn the LED on (HIGH is the voltage level)
+  digitalWrite(13, HIGH);
+  Serial.println("Liga");
+  delay(1000); // Wait for 1000 millisecond(s)
+  // turn the LED off by making the voltage LOW
+  digitalWrite(13, LOW);
+  Serial.println("Desliga");
+  delay(1000); // Wait for 1000 millisecond(s)
+}
