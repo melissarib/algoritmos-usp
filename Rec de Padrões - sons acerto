@@ -1,0 +1,46 @@
+# busca os sons de acerto com a taxa em 0.775
+
+x = read.delim("C:/Users/Windows 7/test.txt", header=F)
+x = x[,1]
+n = length(x)
+delta_t = 60/n
+d = 1000
+x = c(x, 0*(1:d))
+n = length(x)
+x11(); plot(seq(0,len = n, by = delta_t), x, xlab = "t[s]", ylab = "intensity [?]", type = "l", col = "grey")
+
+S = NULL
+s = seq(1,n, by = d)
+for (i in 2:length(s)) {
+  b = abs(x[s[i-1]:(s[i]-1)])
+  a = s[i-1]:(s[i]-1)
+  z = smooth.spline(a,b)
+  S = rbind(S, cbind(z$x, z$y))
+}
+b = abs(x[s[i]:n])
+a = s[i]:n
+z = smooth.spline(a,b)
+S = rbind(S,cbind(z$x,z$y))
+S[(S[,2] < 100), 2] = 0
+x11(); plot(seq(0,len = n, by = delta_t), x, xlab = "t[s]", ylab = "intensity [?]", type = "l", col = "grey")
+points(seq(0, len = n, by = delta_t), S[,2], type = "l")
+x11(); plot(seq(0,len = n, by = delta_t), x, xlab = "t[s]", ylab = "intensity [?]", type = "l", col = "grey", xlim = c(12.2,14.2)) #mudar o tempo aqui
+points(seq(0, len = n, by = delta_t), S[,2], type = "l")
+x11(); plot(S[,1], S[,2], type="l")
+t1 = round(12.2/delta_t)
+t2 = round(14.2/delta_t)
+abline(v = c(t1,t2), col = "blue", lwd = 2)
+k = t1 <= S[,1] & S[,1] <=t2
+M = cbind(S[k,])
+m = nrow(M)
+D = 0*S[,1]
+for (i in 1:(n-m+1)) { D[i] = cor(M[,2], S[i:((i+m)-1),2]) }
+x11(); plot(seq(0,len = n, by = delta_t), D, xlab = "t[s]", ylab = "correlation", type = "l", col = "blue")
+mask = D > 0.775
+mask = which(mask)
+mask = mask[which(diff(mask)>3) - 1]
+x11(); plot(S[,1],S[,2], type = "l")
+abline(v = S[mask,1], col = "red")
+E = S[mask,1]*delta_t
+E = cbind(floor(E), round((E-floor(E))*24/0.99))
+E = unique(apply(E,1,paste, collapse = ":"))
