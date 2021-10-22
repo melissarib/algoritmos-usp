@@ -1,4 +1,4 @@
-# Bem-vindo ao Algoritmos USP!
+### Bem-vindo ao Algoritmos USP!
 
 Este repositório tem o objetivo de reunir os diversos códigos desenvolvidos pelos estudantes do curso de graduação da Informática Biomédica da Universidade de São Paulo, como forma de incentivar a partipação
 de todos os alunos no evento _Hacktoberfest_. Se preferir, você também pode contribuir no repositório da [InfoBio Jr](https://github.com/projetosinfobio/Hacktoberfest)., a empresa júnior do melhor curso. 
@@ -9,4 +9,3 @@ A Hacktoberfest é um evento totalmente online patrocinado pela DigitalOcean com
 Tem espaço para todos os níveis de conhecimento. E a melhor parte: qualquer pessoa que queira pode participar da sua própria casa! Para maiores informações, acesse [essa página](https://hacktoberfest.digitalocean.com/).
 <br><br>
 
-![logo hacktoberfest 2021](https://hacktoberfest.digitalocean.com/_nuxt/img/logo-hacktoberfest-full.f42e3b1.svg)
