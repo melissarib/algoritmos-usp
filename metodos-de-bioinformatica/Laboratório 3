@@ -1,0 +1,29 @@
+### Lab 3 ###
+### topic 2 ###
+data <- read.table("eisen.txt", header=T, na.strings="NA", blank.lines.skip=F);
+rownames(data) <- data[,1];
+data <- data[,-1];
+### topic 3 ###
+data_c = read.table("eisenClasses.txt", header=T)
+### topic 4 ###
+classes <- as.character(data_c[,2]);
+data <- data[,classes];
+classes1 <- data[,1:19];
+classes2 <- data[,20:39];
+### topic 5 ###
+c1 <- as.numeric(classes1[8000,]);
+c2 <- as.numeric(classes2[8000,]);
+c1 <- c1[!is.na(c1)];
+c2 <- c2[!is.na(c2)];
+c1c2.list <- list(c1,c2);
+boxplot(c1c2.list,col=c("blue", "green"),main="Gene #8000");
+par(mfrow=c(2,1), oma=c(1,1,0,0), mar=c(2,2,2,0), tcl=-0.1);
+hist(c1, col="blue", xlab="", ylab="", main="classe 1");
+hist(c2, col="green", xlab="", ylab="", main="classe 2");
+### topic 6 ###
+c1c2.ttest <- t.test(c1, c2, alternative="two.sided", paired=FALSE, var.equal=FALSE, power=0.80, conf.level=0.99);
+c1.sd <- sd(c1); 
+c2.sd <- sd(c2);
+### topic 7 ###
+fold <- log(2);
+power.t.test(delta=fold, sd=c2.sd,power=0.80);
