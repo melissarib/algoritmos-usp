@@ -1,0 +1,37 @@
+### lab 5 ###
+### topic 2a ###
+data <- read.table("rat_KD.txt", header=T);
+### topic 2b ###
+rownames(data) <- data[,1];
+data <- data[,-1];
+### topic 3 ###
+names(data);
+control <- data[,1:6];
+ketogenic <- data[,7:11];
+t.test.all.genes <- function(x,s1,s2) {
+	x1 <- x[s1];
+	x2 <- x[s2];
+	x1 <- as.numeric(x1);
+	x2 <- as.numeric(x2);
+	t.out <- t.test(x1, x2, alternative="two.sided", var.equal=T);
+	out <- as.numeric(t.out$p.value);
+	return(out);
+}
+t.test.run <- apply(data, 1, t.test.all.genes, s1=1:6, s2=7:11);
+### topic 4 ###
+hist(t.test.run,col='gray', xlab="p-values");
+### topic 5 ###
+mean.ctl <- apply(control, 1, mean, na.rm=T);
+mean.ktg <- apply(ketogenic, 1, mean, na.rm=T);
+fold <- log(mean.ctl) - log(mean.ktg)
+### topic 6 ###
+hist(fold,col='gray', xlab="mean");
+### topic 7 ###
+p.trans <- (-1 * log(t.test.run));
+plot(range(p.trans), range(fold), type='n', xlab='-1*log(p-value)', ylab='fold change', main='Volcano Plot');
+points(p.trans, fold, col='black');
+points(p.trans[(p.trans>3&fold>0.7)], fold[(p.trans>3&fold>0.7)], col='red', pch=16);
+points(p.trans[(p.trans>3&fold< -0.7)], fold[(p.trans>3&fold< -0.7)], col='green', pch=16);
+abline(v=3);
+abline(h=-0.7);
+abline(h=0.7);
